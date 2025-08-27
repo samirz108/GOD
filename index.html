@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>InstaMe</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Top Navigation -->
+  <header class="topbar">
+    <div class="left">
+      <button class="icon only-mobile" id="openSidebar" aria-label="Open menu">☰</button>
+      <a class="logo" href="#" data-nav="feed" aria-label="Go to home feed">InstaMe</a>
+    </div>
+    <div class="center search-wrap">
+      <input id="globalSearch" type="search" placeholder="Search users, captions…" autocomplete="off" aria-label="Search" />
+      <div id="searchDropdown" class="dropdown hidden" role="listbox"></div>
+    </div>
+    <nav class="right actions">
+      <button class="icon" id="btnCamera" title="Camera" aria-label="Open camera">📷</button>
+      <button class="icon" id="btnMessages" title="Messages" aria-label="Open messages">💬</button>
+      <button class="icon" id="btnTheme" title="Toggle theme" aria-label="Toggle dark mode">🌓</button>
+    </nav>
+  </header>
+  
+
+  <!-- Main Layout -->
+  <div class="layout">
+    <!-- Left Sidebar (desktop) -->
+    <aside class="sidebar left" id="sidebarLeft">
+      <nav class="side-nav">
+        <a data-nav="feed" class="active">🏠 <span>Home</span></a>
+        <a data-nav="reels">🎞️ <span>Reels</span></a>
+        <a data-nav="explore">🔎 <span>Explore</span></a>
+        <a data-nav="messages">💬 <span>Messages</span></a>
+        <a data-nav="camera">📷 <span>Camera</span></a>
+        <a data-nav="profile">👤 <span>Profile</span></a>
+      </nav>
+    </aside>
+
+    <!-- Views -->
+    <main class="content">
+      <!-- FEED VIEW -->
+      <section id="view-feed" data-view>
+        <!-- Stories -->
+        <div class="stories" id="storiesBar" aria-label="Stories"></div>
+
+        <!-- Create Post -->
+        <div class="composer card">
+          <div class="composer-top">
+            <img class="avatar" id="meAvatar" alt="Your avatar" />
+            <input id="captionInput" class="caption" placeholder="Share something…" />
+          </div>
+          <div class="composer-actions">
+            <label class="btn">
+              <input id="fileInput" type="file" accept="image/*,video/*" hidden />
+              Upload
+            </label>
+            <button id="postButton" class="btn primary">Post</button>
+          </div>
+        </div>
+
+        <!-- Feed Posts -->
+        <div id="feed" class="feed"></div>
+      </section>
+
+      <!-- REELS VIEW -->
+      <section id="view-reels" data-view hidden>
+        <div class="reels" id="reelsList" aria-label="Reels feed"></div>
+      </section>
+
+      <!-- MESSAGES VIEW -->
+      <section id="view-messages" data-view hidden>
+        <div class="messages">
+          <div class="threads" id="threadList" aria-label="Chat threads"></div>
+          <div class="chat" id="chatPane" aria-live="polite">
+            <div class="chat-header" id="chatHeader">Select a chat</div>
+            <div class="chat-body" id="chatBody"></div>
+            <div class="chat-input">
+              <input id="chatText" placeholder="Message…" />
+              <button id="chatSend" class="btn primary">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPLORE / SEARCH VIEW -->
+      <section id="view-explore" data-view hidden>
+        <div class="explore" id="exploreGrid"></div>
+      </section>
+
+      <!-- CAMERA VIEW -->
+      <section id="view-camera" data-view hidden>
+        <div class="camera">
+          <video id="cameraVideo" autoplay playsinline muted></video>
+          <canvas id="cameraCanvas" class="hidden"></canvas>
+          <div class="camera-controls">
+            <button id="cameraStart" class="btn">Start</button>
+            <button id="cameraSnap" class="btn primary">Capture</button>
+            <button id="cameraStop" class="btn">Stop</button>
+          </div>
+          <div class="camera-fallback">
+            <p>If camera access is blocked or unsupported, upload a photo instead.</p>
+            <label class="btn">
+              <input id="cameraUpload" type="file" accept="image/*" hidden />
+              Upload Photo
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFILE VIEW -->
+      <section id="view-profile" data-view hidden>
+        <div class="profile card">
+          <div class="profile-head">
+            <img class="avatar xl" id="profileAvatar" img src="images/userpfp.webp" alt="Profile avatar" />
+            <div>
+              <h2 id="profileName">samirz_z</h2>
+              <div class="muted" id="profileStats">0 posts • 115 followers • 112 following</div>
+              <button id="editProfile" class="btn">Edit Profile</button>
+            </div>
+          </div>
+          <div class="tabs">
+            <button class="tab active" data-tab="posts">Posts</button>
+            <button class="tab" data-tab="reels">Reels</button>
+            <button class="tab" data-tab="saved">Saved</button>
+          </div>
+          <div id="profileGrid" class="explore"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right Sidebar (desktop) -->
+    <aside class="sidebar right">
+      <div class="card suggestions">
+        <div class="card-title">Suggestions for you</div>
+        <div id="suggestionsList"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Bottom Tabbar (mobile) -->
+  <footer class="bottombar">
+    <a data-nav="feed" class="active">🏠<span>Home</span></a>
+    <a data-nav="explore">🔎<span>Explore</span></a>
+    <a data-nav="reels">🎞️<span>Reels</span></a>
+    <a data-nav="messages">💬<span>Chats</span></a>
+    <a data-nav="profile">👤<span>Profile</span></a>
+  </footer>
+
+  <!-- Story Viewer Overlay -->
+  <div id="storyViewer" class="overlay hidden" aria-modal="true" role="dialog">
+    <div class="story">
+      <button id="closeStory" class="icon close" aria-label="Close story">✕</button>
+      
+      <div class="story-frame">
+        <img id="storyMedia" alt="Story media" />
+        <button id="prevStory" class="icon"aria-label="Previous story">⟨</button>
+      <button id="nextStory" class="icon" aria-label="Next story">⟩</button>
+      </div>
+      <div class="progress"><div id="storyProgress"></div></div>
+      <div class="story-meta">
+        <img id="storyUserAvatar" class="avatar sm" img src="userpfp.webp" alt="User avatar" />
+        <span id="storyUserName"></span>
+      </div>
+    </div>
+  </div>
+  
+
+  <script src="app.js"></script>
+</body>
+</html>
