@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Top Navigation -->
+
   <header class="topbar">
     <div class="left">
       <button class="icon only-mobile" id="openSidebar" aria-label="Open menu">☰</button>
@@ -25,9 +25,9 @@
   </header>
   
 
-  <!-- Main Layout -->
+ 
   <div class="layout">
-    <!-- Left Sidebar (desktop) -->
+   
     <aside class="sidebar left" id="sidebarLeft">
       <nav class="side-nav">
         <a data-nav="feed" class="active">🏠 <span>Home</span></a>
@@ -39,14 +39,14 @@
       </nav>
     </aside>
 
-    <!-- Views -->
+
     <main class="content">
-      <!-- FEED VIEW -->
+ 
       <section id="view-feed" data-view>
-        <!-- Stories -->
+       
         <div class="stories" id="storiesBar" aria-label="Stories"></div>
 
-        <!-- Create Post -->
+
         <div class="composer card">
           <div class="composer-top">
             <img class="avatar" id="meAvatar" alt="Your avatar" />
@@ -61,16 +61,11 @@
           </div>
         </div>
 
-        <!-- Feed Posts -->
         <div id="feed" class="feed"></div>
       </section>
-
-      <!-- REELS VIEW -->
       <section id="view-reels" data-view hidden>
         <div class="reels" id="reelsList" aria-label="Reels feed"></div>
       </section>
-
-      <!-- MESSAGES VIEW -->
       <section id="view-messages" data-view hidden>
         <div class="messages">
           <div class="threads" id="threadList" aria-label="Chat threads"></div>
@@ -85,12 +80,10 @@
         </div>
       </section>
 
-      <!-- EXPLORE / SEARCH VIEW -->
       <section id="view-explore" data-view hidden>
         <div class="explore" id="exploreGrid"></div>
       </section>
 
-      <!-- CAMERA VIEW -->
       <section id="view-camera" data-view hidden>
         <div class="camera">
           <video id="cameraVideo" autoplay playsinline muted></video>
@@ -110,7 +103,6 @@
         </div>
       </section>
 
-      <!-- PROFILE VIEW -->
       <section id="view-profile" data-view hidden>
         <div class="profile card">
           <div class="profile-head">
@@ -131,7 +123,6 @@
       </section>
     </main>
 
-    <!-- Right Sidebar (desktop) -->
     <aside class="sidebar right">
       <div class="card suggestions">
         <div class="card-title">Suggestions for you</div>
@@ -140,7 +131,6 @@
     </aside>
   </div>
 
-  <!-- Bottom Tabbar (mobile) -->
   <footer class="bottombar">
     <a data-nav="feed" class="active">🏠<span>Home</span></a>
     <a data-nav="explore">🔎<span>Explore</span></a>
@@ -149,7 +139,6 @@
     <a data-nav="profile">👤<span>Profile</span></a>
   </footer>
 
-  <!-- Story Viewer Overlay -->
   <div id="storyViewer" class="overlay hidden" aria-modal="true" role="dialog">
     <div class="story">
       <button id="closeStory" class="icon close" aria-label="Close story">✕</button>

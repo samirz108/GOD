@@ -1,6 +1,3 @@
-// InstaLite — Vanilla JS SPA (No frameworks).
-// Features: Stories, Feed posts, Reels (auto-play), Messages, Explore grid, Camera (getUserMedia), Search, Dark mode.
-// State persists in localStorage.
 
 const qs = (s, el=document)=>el.querySelector(s);
 const qsa = (s, el=document)=>Array.from(el.querySelectorAll(s));
@@ -10,7 +7,6 @@ const $bottomNav = qsa('.bottombar a');
 const stateKey = 'instalite-state-v1';
 const themeKey = 'instalite-theme-v1';
 
-// ---------- Utilities ----------
 function uid(){ return Math.random().toString(36).slice(2,9) }
 function timeAgo(ts){
   const diff = Math.floor((Date.now()-ts)/1000);
@@ -40,7 +36,6 @@ function avatar(text='U'){
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
 }
 
-// ---------- Seed Data ----------
 const seed = {
   me: { id:'me', name:'Samir', avatar:'images/userpfp.webp' },
   users: [
@@ -60,8 +55,7 @@ const seed = {
     { id:uid(), user:'u1', src:'images/avistry.jpg' },
      { id:uid(), user:'u3', src:'images/nibeshstry.jpg' },
      { id:uid(), user:'u2', src:'images/cat.jpg' },
-     { id:uid(), user:'u4', src:'images/nature.jpg' },
-     { id:uid(), user:'u5', src:'images/kritipur.jpg '}
+     { id:uid(), user:'u4', src:'images/nature.jpg' }
   ],
   posts: [
     { id: uid(), user:'u1', type:'image', src: 'images/qatar.jpg', caption:'QATAR🌆', ts: Date.now()-1000*60*10, likes:10, liked:false },
@@ -79,7 +73,6 @@ const seed = {
   ]
 };
 
-// ---------- State ----------
 let state = loadState();
 function loadState(){
   try{
@@ -101,9 +94,7 @@ function setTheme(mode){
 (function initTheme(){
   setTheme(localStorage.getItem(themeKey)||'light');
 })();
-
-// ---------- Navigation ----------
-function showView(name){
+  function showView(name){
   $views.forEach(v => v.hidden = v.id !== `view-${name}`);
   $leftNav.forEach(a => a.classList.toggle('active', a.dataset.nav===name));
   $bottomNav.forEach(a => a.classList.toggle('active', a.dataset.nav===name));
@@ -119,7 +110,6 @@ qs('#btnTheme').addEventListener('click', ()=>{
   setTheme(current==='light'?'dark':'light');
 });
 
-// ---------- Search ----------
 const searchInput = qs('#globalSearch');
 const searchDropdown = qs('#searchDropdown');
 searchInput.addEventListener('input', onSearch);
@@ -131,13 +121,13 @@ function onSearch(){
   const q = searchInput.value.toLowerCase().trim();
   const rows = [];
   if(!q){ searchDropdown.innerHTML=''; return; }
-  // Users
+
   state.users.concat([state.me]).forEach(u=>{
     if(u.name.toLowerCase().includes(q)){
       rows.push(rowUser(u));
     }
   });
-  // Posts by caption
+ 
   state.posts.forEach(p=>{
     if((p.caption||'').toLowerCase().includes(q)){
       rows.push(`<div class="row" data-goto="post" data-id="${p.id}">
@@ -155,7 +145,7 @@ function onSearch(){
         showProfile(r.dataset.id);
       }else if(goto==='post'){
         showView('feed');
-        // scroll to post
+     
         const el = qs(`[data-post="${r.dataset.id}"]`);
         if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}) }
       }
@@ -170,7 +160,7 @@ function rowUser(u){
   </div>`;
 }
 
-// ---------- Stories ----------
+
 const storiesBar = qs('#storiesBar');
 function renderStories(){
   const list = (state.stories && state.stories.length? state.stories : state.users.map(u=>({id:uid(), user:u.id, src: userById(u.id).avatar})));
@@ -185,8 +175,7 @@ function renderStories(){
     el.addEventListener('click', ()=>openStory(el.dataset.story));
   });
 }
-// ---------- Stories ----------
-// ...existing code...
+
 const overlay = qs('#storyViewer');
 qs('#closeStory').addEventListener('click', ()=>overlay.classList.add('hidden'));
 let storyTimer=null, storyProgress=0;
@@ -240,9 +229,7 @@ function prevStory() {
 
 qs('#nextStory').addEventListener('click', nextStory);
 qs('#prevStory').addEventListener('click', prevStory);
-// ...existing code
 
-// ---------- Feed ----------
 const feed = qs('#feed');
 function userById(id){ if(id==='me') return state.me; return state.users.find(u=>u.id===id)||state.me }
 function renderFeed(){
@@ -272,7 +259,7 @@ function renderFeed(){
       </article>`;
     })
     .join('');
-  // Wire actions
+
   qsa('[data-like]').forEach(btn=>btn.addEventListener('click', ()=>{
     const id = btn.dataset.like;
     const p = state.posts.find(x=>x.id===id);
@@ -284,7 +271,6 @@ function renderFeed(){
 renderStories();
 renderFeed();
 
-// Composer
 const fileInput = qs('#fileInput');
 const captionInput = qs('#captionInput');
 const postButton = qs('#postButton');
@@ -304,7 +290,6 @@ function readFileAsDataURL(file){
   return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.readAsDataURL(file); });
 }
 
-// ---------- Reels ----------
 const reelsList = qs('#reelsList');
 let reelsObserver = null;
 function renderReels(){
@@ -336,7 +321,6 @@ function setupReelsObserver(){
   qsa('.reel', reelsList).forEach(r=>reelsObserver.observe(r));
 }
 
-// ---------- Messages ----------
 const threadList = qs('#threadList');
 const chatHeader = qs('#chatHeader');
 const chatBody = qs('#chatBody');
@@ -365,7 +349,7 @@ function openThread(id){
   const u = userById(chat.with);
   chatHeader.textContent = u.name;
   chatBody.innerHTML = chat.messages.map(m=>`<div class="msg ${m.from==='me'?'me':'them'}">${escapeHTML(m.text)}</div>`).join('');
-  renderThreads(); // refresh active style
+  renderThreads(); 
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 chatSend.addEventListener('click', sendMsg);
@@ -381,7 +365,6 @@ function sendMsg(){
 }
 renderThreads();
 
-// ---------- Explore (grid of all media) ----------
 const exploreGrid = qs('#exploreGrid');
 function renderExplore(){
   const list = state.posts.slice().sort((a,b)=>b.ts-a.ts);
@@ -391,7 +374,6 @@ function renderExplore(){
 }
 renderExplore();
 
-// ---------- Profile ----------
 const profileAvatar = qs('#profileAvatar');
 const profileName = qs('#profileName');
 const profileStats = qs('#profileStats');
@@ -409,7 +391,6 @@ qsa('.tab').forEach(btn=>btn.addEventListener('click', ()=>{
   qsa('.tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
 }));
 
-// ---------- Suggestions ----------
 const suggestionsList = qs('#suggestionsList');
 function renderSuggestions(){
   suggestionsList.innerHTML = state.users.map(u=>`<div class="row">
@@ -425,7 +406,6 @@ function renderSuggestions(){
 }
 renderSuggestions();
 
-// ---------- Camera ----------
 const camVideo = qs('#cameraVideo');
 const camCanvas = qs('#cameraCanvas');
 const camStart = qs('#cameraStart');
@@ -452,7 +432,6 @@ camSnap.addEventListener('click', ()=>{
   const ctx = camCanvas.getContext('2d');
   ctx.drawImage(camVideo, 0,0);
   const dataURL = camCanvas.toDataURL('image/png');
-  // Create a post from captured image
   state.posts.push({ id:uid(), user:'me', type:'image', src:dataURL, caption:'📸 From camera', ts:Date.now(), likes:0, liked:false });
   saveState(); renderFeed(); renderExplore();
   showView('feed');
@@ -466,24 +445,18 @@ camUpload.addEventListener('change', async ()=>{
   showView('feed');
 });
 
-// ---------- Helpers ----------
 function escapeHTML(s){ return s.replace(/[&<>'"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;' }[c])) }
 function linkify(text){
   return text.replace(/(https?:\/\/\S+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
 }
 
-// ---------- Init ----------
 function init(){
-  // Me avatar everywhere
   qs('#meAvatar').src = state.me.avatar;
-  // Default messages: open first chat
   if(state.chats[0]) openThread(state.chats[0].id);
-  // Reels initial render
   renderReels();
 }
 init();
 
-// Re-render reels when posts change
 const oldSave = saveState;
 saveState = function(){
   localStorage.setItem(stateKey, JSON.stringify(state));

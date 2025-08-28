@@ -1,4 +1,4 @@
-/* InstaLite — Responsive Social UI (No external libs) */
+
 :root{
   --bg:#ffffff;
   --card:#ffffff;
@@ -128,8 +128,7 @@ button, input, a{font:inherit}
 .story .progress{position:absolute; top:0; left:0; right:0; height:4px; background:rgba(255,255,255,.2)}
 .story .progress > div{height:100%; width:0%; background:#fff; transition:width .1s linear}
 .story .story-meta{position:absolute; left:8px; top:8px; display:flex; align-items:center; gap:8px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.6)}
-/* Add after other .story-* styles, e.g. after .story-frame or at the end of your file */
-// story frame
+
 .story-frame {
   border: 6px solid var(--primary);
   border-radius: 20px;
@@ -176,7 +175,6 @@ button, input, a{font:inherit}
 .suggestions .row .left{display:flex; align-items:center; gap:10px}
 .suggestions .row .btn{padding:6px 10px}
 
-/* Responsive */
 @media (max-width: 1200px){
   .layout{grid-template-columns: 220px 1fr; }
   .sidebar.right{display:none}
