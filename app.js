@@ -37,17 +37,24 @@ function avatar(text='U'){
 }
 
 const seed = {
-  me: { id:'me', name:'Samir', avatar:'images/userpfp.webp' },
+  me: { id:'me', name:'INSTAUSER', avatar:'images/userpfp.webp' },
   users: [
     { id:'u1', name:'Abhi', avatar: 'images/aviqatar.jpg' },
     { id:'u2', name:'Anish', avatar: 'images/anish.jpg' },
     { id:'u3', name:'Nibesh', avatar: 'images/nibesh.jpg' },
     { id:'u4', name:'Proski', avatar: 'images/proski.jpeg'},
      {id:'u5', name:'Karan', avatar: 'images/doremon.jpeg' },
-     {id:'u6', name:'Sujan', avatar: avatar('S') },
-     {id:'u7', name:'Nirajan', avatar: avatar('S') },
-     {id:'u8', name:'Jonish', avatar: avatar('S') },
-    
+     {id:'u6', name:'pug', avatar: 'images/pug.jpg' },
+     {id:'u7', name:'Raj', avatar: avatar('R') },
+     {id:'u8', name:'Jonish', avatar: 'images/jonny.jpeg' },
+    { id:'u9', name:'Sandip', avatar: avatar('S')},
+    { id:'u10', name:'Bisal', avatar: avatar('B') },
+    { id:'u11', name:'Rup', avatar: avatar('R') },
+    { id:'u12', name:'kranti', avatar: avatar('K')},
+     {id:'u13', name:'Amrit', avatar: avatar('A') },
+     {id:'u14', name:'Sandesh', avatar: avatar('S') },
+     {id:'u15', name:'Samir', avatar: avatar('s') },
+     {id:'u16', name:'Ranjan', avatar:avatar('R') },
      
   ],
   stories: [
@@ -60,7 +67,11 @@ const seed = {
   posts: [
     { id: uid(), user:'u1', type:'image', src: 'images/qatar.jpg', caption:'QATAR🌆', ts: Date.now()-1000*60*10, likes:10, liked:false },
     { id: uid(), user:'u2', type:'image', src: 'images/cafe.jpg', caption:'Enjoy time', ts: Date.now()-1000*60*50, likes:20, liked:false },
-    { id: uid(), user:'u3', type:'image', src: 'images/nibeshpost.jpg', caption:'Kritipur', ts: Date.now()-1000*60*60*8, likes:32, liked:false },
+    { id: uid(), user:'u3', type:'image', src: 'images/nibeshpost 1.jpg', caption:'Kritipur', ts: Date.now()-1000*60*60*8, likes:32, liked:false },
+    { id: uid(), user:'u4', type:'video', src: 'video/kk.mp4', caption:'TIMELAPS', ts: Date.now()-1000*60*60*2, likes:455, liked:false },
+    { id: uid(), user:'u5', type:'video', src: 'video/mm.mp4', caption:'WOW', ts: Date.now()-1000*60*60*2, likes:115, liked:false }
+    
+
   ],
   chats: [
     { id:'c1', with:'u2', messages:[
